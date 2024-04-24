@@ -1,0 +1,108 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Renewable Resources - Global Energy Insights";
+    ViewData["header"] = "Global Energy Insights:Renewable Sources";
+    ViewData["header_content"] = "Welcome to Global Energy Insights! Explore how countries are harnessing renewable energy sources like solar, wind, biomass, and hydroelectric power. Discover the latest in renewable energy production worldwide. Join us in tracking the progress towards a cleaner, greener planet.";
+}
+
+<!-- Renewable Resources Section -->
+
+<style>
+    .select-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    #country-select {
+        color: black;
+        width: 50%; /* Smaller width */
+        font-weight: bold; /* Bold text */
+        border: 2px solid black; /* Thick black border */
+        text-align: center;
+    }
+
+    .card-header {
+        color: black; /* Ensure the text is black */
+        font-size: 1.1rem; /* Slightly larger size */
+        font-weight: bold; /* Bold text */
+    }
+
+    .card-text {
+        color: black; /* Ensure the text is black */
+        font-size: 1.1rem; /* Slightly larger size */
+        font-weight: bold; /* Bold text */
+    }
+
+    .card {
+        margin: 1rem; /* Space around cards */
+        width: 30rem; /* Wider cards to accommodate larger images */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-img-top {
+        width: 100%; /* Make image full width of the card */
+        height: 200px; /* Increase height for better visibility */
+        object-fit: cover; /* Ensures the image covers the area well without stretching */
+    }
+</style>
+
+<div class="row row-content">
+    <div class="col-12 mt-4">
+        <select id="country-select" class="form-control">
+            <option value="">Select a Country</option>
+            <option value="USA">USA</option>
+            <option value="India">India</option>
+            <option value="China">China</option>
+            <option value="Germany">Germany</option>
+            <option value="Russia">Russia</option>
+        </select>
+    </div>
+    <div class="col-12 mt-4 d-flex flex-wrap justify-content-start" id="data-display">
+        <!-- Energy data will be displayed here -->
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="~/lib/node_module/jquery/dist/jquery.slim.min.js"></script>
+<script src="~/lib/node_module/popper.js/dist/umd/popper.min.js"></script>
+<script src="~/lib/node_module/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+    document.getElementById('country-select').addEventListener('change', function () {
+        const country = this.value;
+        const displayDiv = document.getElementById('data-display');
+        displayDiv.innerHTML = ''; // Clear previous contents
+
+        const energyData = {
+            USA: { Solar: "100 GW", Wind: "150 GW", Hydro: "80 GW" },
+            India: { Solar: "50 GW", Wind: "60 GW", Hydro: "45 GW", Biomass: "10 GW" },
+            China: { Solar: "200 GW", Wind: "300 GW", Hydro: "250 GW", Biomass: "50 GW" },
+            Russia: { Hydro: "30 GW", Wind: "5 GW", Biomass: "4 GW" },
+            Germany: { Solar: "60 GW", Wind: "70 GW", Biomass: "20 GW", Hydro: "10 GW" }
+        };
+
+        if (country in energyData) {
+            Object.keys(energyData[country]).forEach(type => {
+                const card = document.createElement('div');
+                card.className = 'card text-center';
+                card.style.width = '14rem'; // Set the width of each card
+                card.innerHTML = `
+                            <h5 class="card-header">${type}</h5>
+                            <img src="img/${type.toLowerCase()}.jpg" class="card-img-top" alt="${type}">
+                            <div class="card-body">
+                                <p class="card-text">${energyData[country][type]}</p>
+                            </div>
+                        `;
+                displayDiv.appendChild(card);
+            });
+        } else {
+            displayDiv.innerHTML = '<p>Please select a valid country to see the data.</p>';
+        }
+    });
+</script>
+

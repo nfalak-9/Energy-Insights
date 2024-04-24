@@ -66,10 +66,15 @@
     </div>
 </div>
 
+<div style="width: 400px; height: 400px; margin: auto;">
+<canvas id="energyPieChart"></canvas>
+</div>
+
 <!-- Scripts -->
 <script src="~/lib/node_modules/jquery/dist/jquery.slim.min.js"></script>
 <script src="~/lib/node_modules/popper.js/dist/umd/popper.min.js"></script>
 <script src="~/lib/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     document.getElementById('country-select').addEventListener('change', function () {
@@ -103,4 +108,87 @@
             displayDiv.innerHTML = '<p>Please select a valid country to see the data.</p>';
         }
     });
+</script>
+<script>
+    document.getElementById('country-select').addEventListener('change', function () {
+        const country = this.value;
+        const displayDiv = document.getElementById('data-display');
+        displayDiv.innerHTML = ''; // Clear previous contents
+
+        const energyData = {
+            USA: { Coal: "500 GW", NaturalGas: "350 GW", Nuclear: "100 GW", Oil: "70 GW" },
+            India: { Coal: "450 GW", NaturalGas: "50 GW", Nuclear: "40 GW", Oil: "25 GW" },
+            China: { Coal: "900 GW", NaturalGas: "200 GW", Nuclear: "60 GW", Oil: "100 GW" },
+            Russia: { Coal: "170 GW", NaturalGas: "300 GW", Nuclear: "50 GW", Oil: "200 GW" },
+            Germany: { Coal: "100 GW", NaturalGas: "80 GW", Nuclear: "8 GW", Oil: "50 GW" }
+        };
+
+        if (country in energyData) {
+            const data = energyData[country];
+            const types = Object.keys(data);
+            const values = types.map(type => parseFloat(data[type].split(" ")[0]));
+
+            types.forEach(type => {
+                const card = document.createElement('div');
+                card.className = 'card text-center';
+                card.style.width = '14rem';
+                card.innerHTML = `
+                            <h5 class="card-header">${type}</h5>
+                            <img src="img/${type.toLowerCase()}.jpg" class="card-img-top" alt="${type}">
+                            <div class="card-body">
+                                <p class="card-text">${data[type]}</p>
+                            </div>
+                        `;
+                displayDiv.appendChild(card);
+            });
+
+            updatePieChart(types, values);
+        } else {
+            displayDiv.innerHTML = '<p>Please select a valid country to see the data.</p>';
+        }
+    });
+
+    let pieChart = null; // Initialize a variable to hold your chart instance
+
+    function updatePieChart(types, values) {
+        const ctx = document.getElementById('energyPieChart').getContext('2d');
+        if (pieChart) {
+            pieChart.destroy(); // Destroy the existing chart instance if exists
+        }
+        pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: types,
+                datasets: [{
+                    label: 'Energy Generation (GW)',
+                    data: values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
+                        'rgba(255, 159, 64, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+    }
 </script>

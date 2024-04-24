@@ -7,7 +7,14 @@
     ViewData["header_content"] = "Our comprehensive analysis of global energy production, where we delve into the realms of renewable and nonrenewable energy sources. Understanding the dynamics between these two categories is crucial for shaping our energy future.";
     ViewBag.LogoPath = "~/img/total_energy_page_icon.jpg";
 }
+@section Styles {
+    <link href="~/css/totalenergy.css" rel="stylesheet">
+    <link href="~/css/jquery.dataTables.min.css">
+}
 
+
+
+<div class="row row-content">
 <div class="col-12">
     <table class="table" id="energyTable">
         <thead>
@@ -52,30 +59,25 @@
         </tbody>
     </table>
 </div>
-    </div>
+</div>
+    
 <div class="row row-content">
     <div class="col-12 offset-3 col-sm-6 align-self-center">
         <canvas id="energyChart" width="600" height="400"></canvas>
     </div>
 </div>
-</div>
+
 
 <!-- Include jQuery (required by DataTables) from a CDN -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <!-- Include DataTables CSS and JS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-<!-- Scripts -->
-<script src="~/lib/node_module/jquery/dist/jquery.slim.min.js"></script>
-<script src="~/lib/node_module/popper.js/dist/umd/popper.min.js"></script>
-<script src="~/lib/node_module/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 @section Scripts {
+    <script src="~/js/jquery-3.6.0.min.js"></script>
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/chart.js"></script>
+
+
     <script>
         $(document).ready(function () {
             // DataTables initialization
@@ -129,6 +131,8 @@
             });
         });
     </script>
-}
+    }
+    
+
 
                         

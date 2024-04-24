@@ -18,36 +18,36 @@
 
     #country-select {
         color: black;
-        width: 50%; /* Smaller width */
-        font-weight: bold; /* Bold text */
-        border: 2px solid black; /* Thick black border */
+        width: 50%;
+        font-weight: bold;
+        border: 2px solid black;
         text-align: center;
     }
 
     .card-header {
-        color: black; /* Ensure the text is black */
-        font-size: 1.1rem; /* Slightly larger size */
-        font-weight: bold; /* Bold text */
+        color: black;
+        font-size: 1.1rem;
+        font-weight: bold;
     }
 
     .card-text {
-        color: black; /* Ensure the text is black */
-        font-size: 1.1rem; /* Slightly larger size */
-        font-weight: bold; /* Bold text */
+        color: black;
+        font-size: 1.1rem;
+        font-weight: bold;
     }
 
     .card {
-        margin: 1rem; /* Space around cards */
-        width: 30rem; /* Wider cards to accommodate larger images */
+        margin: 1rem;
+        width: 30rem;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
     .card-img-top {
-        width: 100%; /* Make image full width of the card */
-        height: 200px; /* Increase height for better visibility */
-        object-fit: cover; /* Ensures the image covers the area well without stretching */
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
     }
 </style>
 
@@ -67,10 +67,16 @@
     </div>
 </div>
 
+<div style="width: 400px; height: 400px; margin: auto;">
+    <canvas id="energyPieChart"></canvas>
+</div>
+
 <!-- Scripts -->
 <script src="~/lib/node_module/jquery/dist/jquery.slim.min.js"></script>
 <script src="~/lib/node_module/popper.js/dist/umd/popper.min.js"></script>
 <script src="~/lib/node_module/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
 
 <script>
     document.getElementById('country-select').addEventListener('change', function () {
@@ -90,7 +96,7 @@
             Object.keys(energyData[country]).forEach(type => {
                 const card = document.createElement('div');
                 card.className = 'card text-center';
-                card.style.width = '14rem'; // Set the width of each card
+                card.style.width = '5rem'; // Set the width of each card
                 card.innerHTML = `
                             <h5 class="card-header">${type}</h5>
                             <img src="img/${type.toLowerCase()}.jpg" class="card-img-top" alt="${type}">
@@ -104,5 +110,92 @@
             displayDiv.innerHTML = '<p>Please select a valid country to see the data.</p>';
         }
     });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+    document.getElementById('country-select').addEventListener('change', function () {
+        const country = this.value;
+        const displayDiv = document.getElementById('data-display');
+        displayDiv.innerHTML = ''; // Clear previous contents
+
+        const energyData = {
+            USA: { Solar: "100 GW", Wind: "150 GW", Hydro: "80 GW" },
+            India: { Solar: "50 GW", Wind: "60 GW", Hydro: "45 GW", Biomass: "10 GW" },
+            China: { Solar: "200 GW", Wind: "300 GW", Hydro: "250 GW", Biomass: "50 GW" },
+            Russia: { Hydro: "30 GW", Wind: "5 GW", Biomass: "4 GW" },
+            Germany: { Solar: "60 GW", Wind: "70 GW", Biomass: "20 GW", Hydro: "10 GW" }
+        };
+
+        if (country in energyData) {
+            const data = energyData[country];
+            const types = Object.keys(data);
+            const values = types.map(type => parseFloat(data[type].split(" ")[0]));
+
+            types.forEach(type => {
+                const card = document.createElement('div');
+                card.className = 'card text-center';
+                card.style.width = '14rem';
+                card.innerHTML = `
+                        <h5 class="card-header">${type}</h5>
+                        <img src="img/${type.toLowerCase()}.jpg" class="card-img-top" alt="${type}">
+                        <div class="card-body">
+                            <p class="card-text">${data[type]}</p>
+                        </div>
+                    `;
+                displayDiv.appendChild(card);
+            });
+
+            updatePieChart(types, values);
+        } else {
+            displayDiv.innerHTML = '<p>Please select a valid country to see the data.</p>';
+        }
+    });
+
+    let pieChart = null; // Initialize a variable to hold your chart instance
+
+    function updatePieChart(types, values) {
+        const ctx = document.getElementById('energyPieChart').getContext('2d');
+        if (pieChart) {
+            pieChart.destroy(); // Destroy the existing chart instance if exists
+        }
+        pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: types,
+                datasets: [{
+                    label: 'Energy Generation (GW)',
+                    data: values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
+                        'rgba(255, 159, 64, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+    }
 </script>
 

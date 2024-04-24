@@ -36,8 +36,8 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"> <span class="fa fa-home fa-lg"> </span>Home</a> </li>
                     <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "RenewableResources" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="RenewableResources" asp-action="Index"> <span class="fa fa-list fa-lg"> </span>Renewable Resources</a> </li>
-                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="NonRenewable"> <span class="fa fa-list fa-lg"> </span>Non Renewable Resources</a> </li>
-                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="TotalEnergy"> <span class="fa fa-list fa-lg"> </span>Total Energy Production</a> </li>
+                    <li class="nav-item" @(ViewContext.RouteData.Values["Controller"].ToString() == "NonRenewableResources" ? "active" : "")><a class="nav-link" asp-area="" asp-controller="NonRenewableResources" asp-action="Index"> <span class="fa fa-list fa-lg"> </span>Non Renewable Resources</a> </li>
+                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "TotalEnergyProduction" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="TotalEnergyProduction" asp-action="Index"> <span class="fa fa-list fa-lg"> </span>Total Energy Production</a> </li>
                     <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "AboutUs" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="AboutUs" asp-action="Index"> <span class="fa fa-info fa-lg"> </span>About Us</a> </li>
                 </ul>
             </div>

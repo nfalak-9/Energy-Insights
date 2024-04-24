@@ -13,6 +13,8 @@
     <Compile Remove="Views\NewFolder2\**" />
     <Compile Remove="Views\NewFolder3\**" />
     <Compile Remove="Views\NewFolder4\**" />
+    <Compile Remove="Views\NewFolder5\**" />
+    <Compile Remove="Views\NewFolder6\**" />
     <Compile Remove="Views\NewFolder\**" />
     <Compile Remove="wwwroot\lib\node_modules\**" />
     <Content Remove="Views\AboutUs\NewFolder\**" />
@@ -20,6 +22,8 @@
     <Content Remove="Views\NewFolder2\**" />
     <Content Remove="Views\NewFolder3\**" />
     <Content Remove="Views\NewFolder4\**" />
+    <Content Remove="Views\NewFolder5\**" />
+    <Content Remove="Views\NewFolder6\**" />
     <Content Remove="Views\NewFolder\**" />
     <Content Remove="wwwroot\lib\node_modules\**" />
     <EmbeddedResource Remove="Views\AboutUs\NewFolder\**" />
@@ -27,6 +31,8 @@
     <EmbeddedResource Remove="Views\NewFolder2\**" />
     <EmbeddedResource Remove="Views\NewFolder3\**" />
     <EmbeddedResource Remove="Views\NewFolder4\**" />
+    <EmbeddedResource Remove="Views\NewFolder5\**" />
+    <EmbeddedResource Remove="Views\NewFolder6\**" />
     <EmbeddedResource Remove="Views\NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\lib\node_modules\**" />
     <None Remove="Views\AboutUs\NewFolder\**" />
@@ -34,6 +40,8 @@
     <None Remove="Views\NewFolder2\**" />
     <None Remove="Views\NewFolder3\**" />
     <None Remove="Views\NewFolder4\**" />
+    <None Remove="Views\NewFolder5\**" />
+    <None Remove="Views\NewFolder6\**" />
     <None Remove="Views\NewFolder\**" />
     <None Remove="wwwroot\lib\node_modules\**" />
   </ItemGroup>

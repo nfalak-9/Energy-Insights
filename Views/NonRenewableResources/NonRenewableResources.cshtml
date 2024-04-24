@@ -1,0 +1,106 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Non-Renewable Resources - Global Energy Insights";
+    ViewData["header"] = "Global Energy Insights: Non-Renewable Sources";
+    ViewData["header_content"] = "Welcome to Global Energy Insights! Explore how countries are harnessing non-renewable energy sources like coal, natural gas, nuclear, and oil. Discover the latest in non-renewable energy production worldwide. Join us in understanding the dynamics of conventional energy sources.";
+    ViewBag.LogoPath = "~/img/non_renewable.jpeg";
+
+}
+<style>
+    .select-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    #country-select {
+        color: black;
+        width: 50%;
+        font-weight: bold;
+        border: 2px solid black;
+        text-align: center;
+    }
+
+    .card-header {
+        color: black;
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        color: black;
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    .card {
+        margin: 1rem;
+        width: 30rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="row row-content">
+    <div class="col-12 mt-4">
+        <select id="country-select" class="form-control">
+            <option value="">Select a Country</option>
+            <option value="USA">USA</option>
+            <option value="India">India</option>
+            <option value="China">China</option>
+            <option value="Germany">Germany</option>
+            <option value="Russia">Russia</option>
+        </select>
+    </div>
+    <div class="col-12 mt-4 d-flex flex-wrap justify-content-start" id="data-display">
+        <!-- Energy data will be displayed here -->
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="~/lib/node_modules/jquery/dist/jquery.slim.min.js"></script>
+<script src="~/lib/node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="~/lib/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+    document.getElementById('country-select').addEventListener('change', function () {
+        const country = this.value;
+        const displayDiv = document.getElementById('data-display');
+        displayDiv.innerHTML = ''; // Clear previous contents
+
+        const energyData = {
+            USA: { Coal: "500 GW", NaturalGas: "350 GW", Nuclear: "100 GW", Oil: "70 GW" },
+            India: { Coal: "450 GW", NaturalGas: "50 GW", Nuclear: "40 GW", Oil: "25 GW" },
+            China: { Coal: "900 GW", NaturalGas: "200 GW", Nuclear: "60 GW", Oil: "100 GW" },
+            Russia: { Coal: "170 GW", NaturalGas: "300 GW", Nuclear: "50 GW", Oil: "200 GW" },
+            Germany: { Coal: "100 GW", NaturalGas: "80 GW", Nuclear: "8 GW", Oil: "50 GW" }
+        };
+
+        if (country in energyData) {
+            Object.keys(energyData[country]).forEach(type => {
+                const card = document.createElement('div');
+                card.className = 'card text-center';
+                card.style.width = '14rem';
+                card.innerHTML = `
+                                <h5 class="card-header">${type}</h5>
+                                <img src="img/${type.toLowerCase()}.jpg" class="card-img-top" alt="${type}">
+                                <div class="card-body">
+                                    <p class="card-text">${energyData[country][type]}</p>
+                                </div>
+                            `;
+                displayDiv.appendChild(card);
+            });
+        } else {
+            displayDiv.innerHTML = '<p>Please select a valid country to see the data.</p>';
+        }
+    });
+</script>

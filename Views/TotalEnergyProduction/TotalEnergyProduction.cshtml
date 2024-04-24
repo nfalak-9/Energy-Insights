@@ -1,0 +1,134 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Total Energy Production - Global Energy Insights";
+    ViewData["header"] = "Global Energy Insights : Total Energy Production";
+    ViewData["header_content"] = "Our comprehensive analysis of global energy production, where we delve into the realms of renewable and nonrenewable energy sources. Understanding the dynamics between these two categories is crucial for shaping our energy future.";
+    ViewBag.LogoPath = "~/img/total_energy_page_icon.jpg";
+}
+
+<div class="col-12">
+    <table class="table" id="energyTable">
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Total Energy Production (GW)</th>
+                <th>Renewable Energy (GW)</th>
+                <th>Nonrenewable Energy (GW)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>USA</td>
+                <td>1350</td>
+                <td>330</td>
+                <td>1020</td>
+            </tr>
+            <tr>
+                <td>India</td>
+                <td>730</td>
+                <td>165</td>
+                <td>565</td>
+            </tr>
+            <tr>
+                <td>China</td>
+                <td>2060</td>
+                <td>800</td>
+                <td>1260</td>
+            </tr>
+            <tr>
+                <td>Germany</td>
+                <td>398</td>
+                <td>160</td>
+                <td>238</td>
+            </tr>
+            <tr>
+                <td>Russia</td>
+                <td>759</td>
+                <td>39</td>
+                <td>720</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    </div>
+<div class="row row-content">
+    <div class="col-12 offset-3 col-sm-6 align-self-center">
+        <canvas id="energyChart" width="600" height="400"></canvas>
+    </div>
+</div>
+</div>
+
+<!-- Include jQuery (required by DataTables) from a CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include DataTables CSS and JS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<!-- Scripts -->
+<script src="~/lib/node_module/jquery/dist/jquery.slim.min.js"></script>
+<script src="~/lib/node_module/popper.js/dist/umd/popper.min.js"></script>
+<script src="~/lib/node_module/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // DataTables initialization
+            $('#energyTable').DataTable({
+                paging: false,
+                searching: false,
+                info: false
+            });
+
+            // Retrieve data from the table and prepare for chart
+            const tableData = $('#energyTable').DataTable().rows().data();
+            const countries = tableData.toArray().map(row => row[0]);
+            const totalEnergy = tableData.toArray().map(row => parseFloat(row[1]));
+            const renewableEnergy = tableData.toArray().map(row => parseFloat(row[2]));
+            const nonrenewableEnergy = tableData.toArray().map(row => parseFloat(row[3]));
+
+            // Create a stacked column chart
+            const ctx = document.getElementById('energyChart').getContext('2d');
+            const energyChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: countries,
+                    datasets: [
+                        {
+                            label: 'Renewable Energy (GW)',
+                            data: renewableEnergy,
+                            backgroundColor: 'rgba(92, 184, 92, 0.7)',
+                            borderColor: 'rgba(92, 184, 92, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Nonrenewable Energy (GW)',
+                            data: nonrenewableEnergy,
+                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}
+
+                        

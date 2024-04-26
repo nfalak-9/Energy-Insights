@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<Energy_Insights.Models.EnergyGenerationModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Admin Page - Global Energy Insights";
+    ViewData["header"] = "Global Energy Insights: Admin Page";
+    ViewData["header_content"] = "This page, designed exclusively for administrators, facilitates CRUD (Create, Read, Update, Delete) operations for energy management, suppose to be visible only to admins.";
+    ViewBag.LogoPath = "~/img/admin.jpg";
 }
 
-<h1>Admin Opeartion</h1>
+<h1>Admin Operations</h1>
 
 <p>
     <a asp-action="Create">Create New</a>

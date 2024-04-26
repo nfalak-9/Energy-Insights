@@ -40,7 +40,8 @@
                     <li class="nav-item" @(ViewContext.RouteData.Values["Controller"].ToString() == "NonRenewableResources" ? "active" : "")><a class="nav-link" asp-area="" asp-controller="NonRenewableResources" asp-action="Index"> <span class="fa fa-list fa-lg"> </span>Non Renewable Resources</a> </li>
                     <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "TotalEnergyProduction" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="TotalEnergyProduction" asp-action="Index"> <span class="fa fa-list fa-lg"> </span>Total Energy Production</a> </li>
                     <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "AboutUs" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="AboutUs" asp-action="Index"> <span class="fa fa-info fa-lg"> </span>About Us</a> </li>
-                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Articles" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="Articles" asp-action="Index"> <span class="fa fa-info fa-lg"> </span>Articles</a> </li>
+                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Articles" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="Articles" asp-action="Index"> <span class="fa fa-book fa-lg"> </span>Articles</a> </li>
+                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "EnergyGenerationModels" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="EnergyGenerationModels" asp-action="Index"> <span class="fa fa-check fa-lg"> </span>Admin Page</a> </li>
 
                 </ul>
             </div>

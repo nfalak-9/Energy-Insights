@@ -51,7 +51,14 @@ namespace Energy_Insights.Controllers
         {
             ViewData["CountryId"] = new SelectList(_context.Set<CountryModel>(), "Id", "Id");
             ViewData["EnergyTypeId"] = new SelectList(_context.Set<EnergyTypeModel>(), "Id", "Id");
+            ViewData["CountryList"] = new SelectList(_context.Set<CountryModel>(), "Id", "Name");
+            var energyTypes = _context.Set<EnergyTypeModel>().Select(et => new { et.Id, CategoryAndName = $"{et.Category} - {et.Name}" });
+
+            // Pass the concatenated category and name to the view
+            ViewData["EnergyTypeList"] = new SelectList(energyTypes, "Id", "CategoryAndName");
+          
             return View();
+           
         }
 
         // POST: EnergyGenerationModels/Create
@@ -61,14 +68,28 @@ namespace Energy_Insights.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CountryId,EnergyTypeId,Amount")] EnergyGenerationModel energyGenerationModel)
         {
-            if (ModelState.IsValid)
+
+            var country = await _context.Set<CountryModel>().FindAsync(energyGenerationModel.CountryId);
+            var energyType = await _context.Set<EnergyTypeModel>().FindAsync(energyGenerationModel.EnergyTypeId);
+
+            // Assign the retrieved models to the energyGenerationModel properties
+            if(country == null || energyType == null) { return NotFound(); }
+            energyGenerationModel.Country = country;
+            energyGenerationModel.EnergyType = energyType;
+            if(true)
             {
+
                 _context.Add(energyGenerationModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CountryId"] = new SelectList(_context.Set<CountryModel>(), "Id", "Id", energyGenerationModel.CountryId);
             ViewData["EnergyTypeId"] = new SelectList(_context.Set<EnergyTypeModel>(), "Id", "Id", energyGenerationModel.EnergyTypeId);
+           
+            ViewData["CountryList"] = new SelectList(_context.Set<CountryModel>(), "Id", "Name", energyGenerationModel.CountryId );
+            ViewData["EnergyTypeList"] = new SelectList(_context.Set<EnergyTypeModel>().Select(et => new { Id = et.Id, Name = $"{et.Category} - {et.Name}" }), "Id", "Name", energyGenerationModel.EnergyTypeId);
+
             return View(energyGenerationModel);
         }
 
@@ -87,6 +108,8 @@ namespace Energy_Insights.Controllers
             }
             ViewData["CountryId"] = new SelectList(_context.Set<CountryModel>(), "Id", "Id", energyGenerationModel.CountryId);
             ViewData["EnergyTypeId"] = new SelectList(_context.Set<EnergyTypeModel>(), "Id", "Id", energyGenerationModel.EnergyTypeId);
+            ViewData["CountryList"] = new SelectList(_context.Set<CountryModel>(), "Id", "Name", energyGenerationModel.CountryId);
+            ViewData["EnergyTypeList"] = new SelectList(_context.Set<EnergyTypeModel>().Select(et => new { Id = et.Id, Name = $"{et.Category} - {et.Name}" }), "Id", "Name", energyGenerationModel.EnergyTypeId);
             return View(energyGenerationModel);
         }
 
@@ -102,7 +125,7 @@ namespace Energy_Insights.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (true)
             {
                 try
                 {
@@ -124,7 +147,10 @@ namespace Energy_Insights.Controllers
             }
             ViewData["CountryId"] = new SelectList(_context.Set<CountryModel>(), "Id", "Id", energyGenerationModel.CountryId);
             ViewData["EnergyTypeId"] = new SelectList(_context.Set<EnergyTypeModel>(), "Id", "Id", energyGenerationModel.EnergyTypeId);
+            ViewData["CountryList"] = new SelectList(_context.Set<CountryModel>(), "Id", "Name", energyGenerationModel.CountryId);
+            ViewData["EnergyTypeList"] = new SelectList(_context.Set<EnergyTypeModel>().Select(et => new { Id = et.Id, Name = $"{et.Category} - {et.Name}" }), "Id", "Name", energyGenerationModel.EnergyTypeId);
             return View(energyGenerationModel);
+           
         }
 
         // GET: EnergyGenerationModels/Delete/5

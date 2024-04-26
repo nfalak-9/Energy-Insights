@@ -1,0 +1,133 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IEnumerable<Energy_Insights.Models.Articles>
+
+@{
+    ViewData["Title"] = "Global Energy Insights";
+    ViewData["header"] = "Global Energy Insights";
+    ViewData["header_content"] = "Exploring Energy Trends: Discover the Latest Developments in Renewable and Non-Renewable Resources";
+    ViewData["header_img"] = "~/img/logo.png";
+}
+
+<!-- Your HTML structure here -->
+
+<div>
+    <h1>   </h1>
+</div>
+<div class="container">
+    <div id="article-container" class="card-container">
+    </div>
+</div>
+<div class="row row-content">
+    <div class="col-12">
+        <h3>SUBSCRIBE NOW</h3>
+        <h5>To get latest news articles or updates about energy developments</h5>
+    </div>
+    <div class="col-12 col-md-9">
+        <form id="subscribeForm">
+            <div class="form-group row">
+                <label for="firstname" class="col-md-2 col-form-label">FirstName</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="FirstName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="lastname" class="col-md-2 col-form-label">LastName</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="LastName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="emailid" class="col-md-2 col-form-label">Email</label>
+                <div class="col-md-10">
+                    <input type="email" class="form-control" id="emailid" name="emailid" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-md-2 col-md-10">
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section styles {
+    <style>
+        /* Your CSS goes here */
+
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .card {
+            width: 30%;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+            .card h2 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .card p {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .card a {
+                display: block;
+                text-align: right;
+                margin-top: 10px;
+                color: #007bff;
+                text-decoration: none;
+            }
+    </style>
+}
+
+@section scripts {
+    <script>
+        // Your JS goes here, replace the dummy data with Model data
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const articleContainer = document.getElementById('article-container');
+
+            // Dummy data (replace with actual article data)
+            const articles = [
+                { title: 'The Future of Solar Energy', content: 'As we step into 2024, the solar energy landscape is poised for unprecedented growth and innovation...', link: 'https://www.nexamp.com/blog/the-future-of-solar-energy-trends-and-predictions-2024' },
+                { title: 'Renewable Energy Is Charging Ahead', content: 'Humanity is at a crossroads in choosing the way we will power our future....', link: 'https://www.scientificamerican.com/article/renewable-energy-is-charging-ahead/' },
+                { title: 'Benefits of Renewable Energy', content: 'We use energy every day - to power our homes, turn on the lights, power our cars, and much more. ...', link: 'https://re-volv.org/blog-center/articles/?p=benefits-of-renewable-energy&gad_source=1&gclid=CjwKCAjw26KxBhBDEiwAu6KXtzqCGC1jTDLdBRl3Jgm38t3xGHQUAZDnCvAw0A_0-GmODOmlpzlDFxoCE7oQAvD_BwE' }
+                // Add more articles as needed
+            ];
+
+            // Function to create and display article cards
+            function displayArticles() {
+                articleContainer.innerHTML = ''; // Clear previous content
+
+                articles.forEach(article => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                                <h2>${article.title}</h2>
+                                <p>${article.content}</p>
+                                <a href="${article.link}" target="_blank">Read More</a>
+                            `;
+                    articleContainer.appendChild(card);
+                });
+            }
+
+            // Display article cards on page load
+            displayArticles();
+        });
+    </script>
+}

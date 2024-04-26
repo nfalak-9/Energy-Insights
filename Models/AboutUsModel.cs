@@ -1,6 +1,9 @@
-﻿namespace Energy_Insights.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Energy_Insights.Models
 {
-    public class AboutUsModel
+    [NotMapped]
+    public class AboutUsModel 
     {
         public string Name { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;

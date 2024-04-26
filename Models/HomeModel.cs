@@ -1,5 +1,8 @@
-﻿namespace Energy_Insights.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Energy_Insights.Models
 {
+    [NotMapped]
     public class HomeModel
     {
         public string Title { get; set; } = string.Empty;

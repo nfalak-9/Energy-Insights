@@ -2,7 +2,8 @@
   "dependencies": {
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:Energy_InsightsContext"
+      "connectionId": "ConnectionStrings:Energy_InsightsContext",
+      "dynamicId": null
     }
   }
 }

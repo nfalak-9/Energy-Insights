@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "EnergyInsights20240423225535",
+      "defaultValue": "EnergyInsights20240426183252",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }
